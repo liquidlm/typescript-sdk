@@ -1,0 +1,9 @@
+node_modules/
+artifacts/
+**/dist/
+packages/sdk/contract/openapi.json
+packages/sdk/src/generated.ts
+packages/sdk/docs/API.md
+packages/cli/src/generated/
+SOURCE_MANIFEST.json
+THIRD_PARTY_NOTICES.md

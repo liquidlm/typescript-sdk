@@ -1,0 +1,43 @@
+{
+  "name": "liquidlm-typescript-source",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "workspaces": [
+    "packages/sdk",
+    "packages/cli"
+  ],
+  "scripts": {
+    "build": "npm run build -w @liquidlm/sdk && npm run build -w @liquidlm/cli",
+    "test": "npm run test --workspaces",
+    "typecheck": "npm run build -w @liquidlm/sdk && npm run typecheck -w @liquidlm/cli",
+    "contract:check": "npm run contract:check -w @liquidlm/sdk",
+    "package:check": "node scripts/check-packages.mjs",
+    "lint": "eslint .",
+    "format:check": "prettier --check .",
+    "examples:check": "tsc -p packages/sdk/examples/tsconfig.json --noEmit && tsx packages/sdk/examples/synthetic.ts",
+    "verify": "npm run format:check && npm run lint && npm run build && npm run typecheck && npm test && npm run examples:check && npm run package:check",
+    "release:prepare": "npm run verify && node scripts/release-evidence.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "5.0.3",
+    "tsx": "^4.21.0",
+    "eslint": "10.12.0",
+    "@eslint/js": "10.0.1",
+    "typescript-eslint": "8.62.1",
+    "prettier": "3.8.5",
+    "globals": "17.7.0"
+  },
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liquidlm/typescript-sdk.git"
+  },
+  "homepage": "https://github.com/liquidlm/typescript-sdk#readme",
+  "bugs": "https://github.com/liquidlm/typescript-sdk/issues"
+}
