@@ -26,11 +26,37 @@ import {
   supportsPat,
   usesRemoteOauth,
 } from "../mcp-config.js";
+import {
+  SKILL_CLIENTS,
+  installSkill,
+  type SkillClient,
+} from "../skill-install.js";
+
+function withSkill(client: string, mcpUrl: string, dryRun?: boolean): void {
+  if (dryRun) {
+    console.log(
+      `\n# Would also install the conventions block: liquidlm skill --client ${client}`,
+    );
+    return;
+  }
+  if (!(SKILL_CLIENTS as readonly string[]).includes(client)) {
+    console.log(
+      `\n--with-skill: ${client} reads assistant instructions from its own app settings; nothing installed. Use \`liquidlm skill --client generic\` for a standalone LIQUIDLM.md.`,
+    );
+    return;
+  }
+  const result = installSkill({
+    client: client as SkillClient,
+    endpoint: mcpUrl,
+  });
+  console.log(`Conventions: ${result.message}`);
+}
 
 export function runMcpInstall(opts: {
   client?: string;
   pat?: boolean;
   dryRun?: boolean;
+  withSkill?: boolean;
 }): void {
   const client = opts.client;
   if (!client) {
@@ -54,6 +80,7 @@ export function runMcpInstall(opts: {
       "\n# 3. PAT (last fallback): inject $LIQUIDLM_API_TOKEN. Environment substitution syntax depends on your client:\n",
     );
     console.log(pat);
+    if (opts.withSkill) withSkill(client, mcpUrl, opts.dryRun);
     return;
   }
 
@@ -85,6 +112,7 @@ export function runMcpInstall(opts: {
       `# ${rendered.replaced ? "Would update" : "Would write"} ${rendered.path}\n`,
     );
     console.log(rendered.contents.trimEnd());
+    if (opts.withSkill) withSkill(client, mcpUrl, true);
     return;
   }
 
@@ -114,6 +142,7 @@ export function runMcpInstall(opts: {
   console.log(
     "Most clients pick up the new server live; restart the client if it doesn't appear.",
   );
+  if (opts.withSkill) withSkill(client, mcpUrl, opts.dryRun);
 }
 
 const LOGIN_HINT =
@@ -260,9 +289,20 @@ export function registerMcpCommands(program: Command): void {
       "Authenticate with a PAT ($LIQUIDLM_API_TOKEN) over direct HTTP instead of the client's default transport",
     )
     .option("--dry-run", "Print the resulting config without writing it")
-    .action((opts: { client?: string; pat?: boolean; dryRun?: boolean }) => {
-      runMcpInstall(opts);
-    });
+    .option(
+      "--with-skill",
+      "Also install the LiquidLM conventions block for this client (AGENTS.md/CLAUDE.md/.cursor rules)",
+    )
+    .action(
+      (opts: {
+        client?: string;
+        pat?: boolean;
+        dryRun?: boolean;
+        withSkill?: boolean;
+      }) => {
+        runMcpInstall(opts);
+      },
+    );
 
   mcp
     .command("serve")

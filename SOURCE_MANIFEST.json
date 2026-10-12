@@ -67,12 +67,16 @@
       "sha256": "bfdb1e5c2ff762e57c73cb21f96b5da6e30d3b0b7e88338276820fe2c91763b5"
     },
     {
+      "path": "packages/cli/src/commands/mcp-install.test.ts",
+      "sha256": "4aa5ceb7d99964f9c726486f7db5adde9cb8101dadc986f57a411e07ae68f305"
+    },
+    {
       "path": "packages/cli/src/commands/mcp-serve.test.ts",
       "sha256": "aeea6fb1e4b7a8399e5ee17b81e79dba1421cfc7a68c4edd68f5d36378b22f42"
     },
     {
       "path": "packages/cli/src/commands/mcp.ts",
-      "sha256": "2727d37c95ad3b42a742c2ad34dc818ff454519734198db836501351d2f1692c"
+      "sha256": "7df9eee4230dffd352094910ecaf87c1693bafa00b61517f331e76b546998d30"
     },
     {
       "path": "packages/cli/src/commands/org.test.ts",
@@ -92,11 +96,11 @@
     },
     {
       "path": "packages/cli/src/commands/skill.test.ts",
-      "sha256": "49087a46fd9443cf11efd9ac4cac36e422f061ffdc247957bea2625e53404773"
+      "sha256": "c9c2482e2240e82ec14e913caba7ba697ec1be630d26faf2c309b85ed3278a4b"
     },
     {
       "path": "packages/cli/src/commands/skill.ts",
-      "sha256": "16a1cb5b48624843107f7bb5e0befa4bf375f3561532eb1c8fa5d99fabdd2dc4"
+      "sha256": "30787657b40f5dc0dd9c378692f7e5ceb5252be2082cf96dfeb8a2c79cf51b6d"
     },
     {
       "path": "packages/cli/src/commands/token.test.ts",
@@ -324,7 +328,7 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "2dabc825507c2f46ea036ceee250bb978c082a1e3dd755777a343466d1120fb9"
+      "sha256": "8552e37c2e0ba4629cc6875fda12bb142e94cd3540592cdc7174023dcb9e31c9"
     },
     {
       "path": "CODE_OF_CONDUCT.md",

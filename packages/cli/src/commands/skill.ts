@@ -9,7 +9,6 @@ import {
   installSkill,
   type SkillClient,
 } from "../skill-install.js";
-import { runMcpInstall } from "./mcp.js";
 
 export function buildSkillFile(mcpEndpoint = getMcpUrl()): string {
   const endpoint = mcpEndpoint.trim() || "<your-mcp-url>";
@@ -22,18 +21,12 @@ export function registerSkillCommand(program: Command): void {
     .description("Write LiquidLM.md agent instructions for this project")
     .option("--client <client>", SKILL_CLIENTS.join(" | "), "generic")
     .option("--out <path>", "Output path, or '-' to print without installing")
-    .option(
-      "--with-mcp",
-      "Also write the client's MCP server configuration",
-      false,
-    )
     .option("--uninstall", "Remove the managed conventions block/file", false)
     .option("--force", "Replace managed content that was edited by hand", false)
     .action(
       (opts: {
         client?: string;
         out?: string;
-        withMcp?: boolean;
         uninstall?: boolean;
         force?: boolean;
       }) => {
@@ -70,13 +63,6 @@ export function registerSkillCommand(program: Command): void {
             force: opts.force,
           });
           console.log(result.message);
-          if (opts.withMcp && !opts.uninstall) {
-            if (client === "generic") {
-              runMcpInstall({ client: "generic" });
-            } else {
-              runMcpInstall({ client });
-            }
-          }
         } catch (err) {
           if (err instanceof InstallRefusal) {
             console.error(err.message);
