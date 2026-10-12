@@ -1,6 +1,6 @@
 {
   "name": "@liquidlm/cli",
-  "version": "0.2.0-alpha.0",
+  "version": "0.2.0-alpha.1",
   "description": "Command-line interface for LiquidLM — log in, manage scoped tokens, install the MCP server, search or upload to your knowledge vaults, and fetch media URLs locally with yt-dlp.",
   "license": "MIT",
   "type": "module",

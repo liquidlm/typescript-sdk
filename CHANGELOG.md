@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.0-alpha.1 (CLI)
+
+- `skill` supports all assistant clients (`claude-code`, `codex`, `opencode`,
+  `cursor`, `generic`) with checksum-guarded managed blocks: install, repeated
+  install, update, hand-edit detection (`--force`), `--uninstall` and rolling
+  `.liquidlm.bak` backups. Shared instruction files keep unrelated content.
+- `skill --with-mcp` also writes the client's MCP server configuration — one
+  command sets up both the tools and the conventions.
+- `--out <path>`/`-` keeps its 0.1.6 whole-file behavior with no block markers.
+- The `cursor` target now writes `.cursor/rules/liquidlm.mdc` instead of a
+  plain `LIQUIDLM.md` (the old flag was accepted but ignored).
+- Managed-block bytes are parity-pinned against the `liquidlm/skills`
+  repository installer by a shared fixture hash in both test suites.
+
 ## 0.2.0-alpha.0 (CLI) / 0.1.0-alpha.0 (SDK) — prerelease candidate
 
 - Add a public-contract TypeScript SDK with configurable transport and endpoint.

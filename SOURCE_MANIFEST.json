@@ -16,7 +16,7 @@
     },
     {
       "path": "packages/cli/package.json",
-      "sha256": "116e68e5167a3a9eb46c0ba23dadb6aae2822ae03163290dd24676e17bd87aff"
+      "sha256": "27bf974d9c4748a29e8c479557230d2404acd4d0ef34dd41caee9be998c2ccaa"
     },
     {
       "path": "packages/cli/src/auth-callback.test.ts",
@@ -72,7 +72,7 @@
     },
     {
       "path": "packages/cli/src/commands/mcp.ts",
-      "sha256": "152fa6212c7a0e283016d6e2c05e342b48cf73f920e1f637aa5135e8038346b1"
+      "sha256": "2727d37c95ad3b42a742c2ad34dc818ff454519734198db836501351d2f1692c"
     },
     {
       "path": "packages/cli/src/commands/org.test.ts",
@@ -92,11 +92,11 @@
     },
     {
       "path": "packages/cli/src/commands/skill.test.ts",
-      "sha256": "8738cbb1e0a1522a0bb50c2b46a06dd0c862f7c7f5fd15a4f3396012c884a07e"
+      "sha256": "49087a46fd9443cf11efd9ac4cac36e422f061ffdc247957bea2625e53404773"
     },
     {
       "path": "packages/cli/src/commands/skill.ts",
-      "sha256": "df6836eb6c66fc99ba3e15e0b978a70851f93c3302f3600bb32aa89803b5b019"
+      "sha256": "16a1cb5b48624843107f7bb5e0befa4bf375f3561532eb1c8fa5d99fabdd2dc4"
     },
     {
       "path": "packages/cli/src/commands/token.test.ts",
@@ -185,6 +185,14 @@
     {
       "path": "packages/cli/src/resolve-vault.ts",
       "sha256": "df061c6cd3338f78ad44a65f3074bc3dbdbb49af0d433c8981346c3a151dee68"
+    },
+    {
+      "path": "packages/cli/src/skill-install.test.ts",
+      "sha256": "4f22820824d94175c1ed9d7f1224f4b0ca027bcf19e033e93591debcff85cbf4"
+    },
+    {
+      "path": "packages/cli/src/skill-install.ts",
+      "sha256": "c300430ce37a3be8d73f0d81727fcaef8d005d596c807ab013f1e8b62bf784e0"
     },
     {
       "path": "packages/cli/src/upload-helper.ts",
@@ -316,7 +324,7 @@
     },
     {
       "path": "CHANGELOG.md",
-      "sha256": "4e40cca0edddc01e7672de791d48bc8ca7472b22707042f0e8c9dfeb2b8d4ee0"
+      "sha256": "2dabc825507c2f46ea036ceee250bb978c082a1e3dd755777a343466d1120fb9"
     },
     {
       "path": "CODE_OF_CONDUCT.md",
@@ -360,7 +368,7 @@
     },
     {
       "path": "package-lock.json",
-      "sha256": "4db7a1dfe86e32e130fde700e206a5f72ba3252cca3769e3bf5c058377d769a7"
+      "sha256": "53781b80042a6b33a6b3204a2bfc76ee74ffc04272109e7546009ca0f4a535e2"
     },
     {
       "path": "package.json",

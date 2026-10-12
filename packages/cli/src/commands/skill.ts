@@ -3,6 +3,13 @@ import { dirname } from "node:path";
 import type { Command } from "commander";
 import { SKILL_TEMPLATE } from "../generated/skill-template.js";
 import { getMcpUrl } from "../config.js";
+import {
+  InstallRefusal,
+  SKILL_CLIENTS,
+  installSkill,
+  type SkillClient,
+} from "../skill-install.js";
+import { runMcpInstall } from "./mcp.js";
 
 export function buildSkillFile(mcpEndpoint = getMcpUrl()): string {
   const endpoint = mcpEndpoint.trim() || "<your-mcp-url>";
@@ -13,28 +20,70 @@ export function registerSkillCommand(program: Command): void {
   program
     .command("skill")
     .description("Write LiquidLM.md agent instructions for this project")
-    .option("--client <client>", "cursor | generic", "generic")
-    .option("--out <path>", "Output path, or '-' for stdout", "LiquidLM.md")
-    .action((opts: { client?: string; out?: string }) => {
-      const client = opts.client ?? "generic";
-      if (client !== "cursor" && client !== "generic") {
-        console.error(
-          'Unsupported client. Use "--client cursor" or "--client generic".',
-        );
-        process.exit(1);
-      }
+    .option("--client <client>", SKILL_CLIENTS.join(" | "), "generic")
+    .option("--out <path>", "Output path, or '-' to print without installing")
+    .option(
+      "--with-mcp",
+      "Also write the client's MCP server configuration",
+      false,
+    )
+    .option("--uninstall", "Remove the managed conventions block/file", false)
+    .option("--force", "Replace managed content that was edited by hand", false)
+    .action(
+      (opts: {
+        client?: string;
+        out?: string;
+        withMcp?: boolean;
+        uninstall?: boolean;
+        force?: boolean;
+      }) => {
+        const client = (opts.client ?? "generic") as SkillClient;
+        if (!SKILL_CLIENTS.includes(client)) {
+          console.error(
+            `Unsupported client. Use "--client ${SKILL_CLIENTS.join('" or "--client')}".`,
+          );
+          process.exit(1);
+        }
 
-      const content = buildSkillFile();
-      const out = opts.out ?? "LiquidLM.md";
+        const endpoint = getMcpUrl();
 
-      if (out === "-") {
-        process.stdout.write(content);
-        if (!content.endsWith("\n")) process.stdout.write("\n");
-        return;
-      }
+        // Explicit output path: whole-file write, no managed block (legacy
+        // behavior for piping the conventions somewhere unusual).
+        if (opts.out) {
+          const content = buildSkillFile(endpoint);
+          if (opts.out === "-") {
+            process.stdout.write(content);
+            if (!content.endsWith("\n")) process.stdout.write("\n");
+            return;
+          }
+          mkdirSync(dirname(opts.out), { recursive: true });
+          writeFileSync(opts.out, content, "utf8");
+          console.log(`Wrote ${opts.out}`);
+          return;
+        }
 
-      mkdirSync(dirname(out), { recursive: true });
-      writeFileSync(out, content, "utf8");
-      console.log(`Wrote ${out}`);
-    });
+        try {
+          const result = installSkill({
+            client,
+            endpoint,
+            uninstall: opts.uninstall,
+            force: opts.force,
+          });
+          console.log(result.message);
+          if (opts.withMcp && !opts.uninstall) {
+            if (client === "generic") {
+              runMcpInstall({ client: "generic" });
+            } else {
+              runMcpInstall({ client });
+            }
+          }
+        } catch (err) {
+          if (err instanceof InstallRefusal) {
+            console.error(err.message);
+            process.exit(1);
+          }
+          throw err;
+        }
+      },
+    );
 }

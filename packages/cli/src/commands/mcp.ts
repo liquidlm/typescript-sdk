@@ -27,7 +27,7 @@ import {
   usesRemoteOauth,
 } from "../mcp-config.js";
 
-function runInstall(opts: {
+export function runMcpInstall(opts: {
   client?: string;
   pat?: boolean;
   dryRun?: boolean;
@@ -261,7 +261,7 @@ export function registerMcpCommands(program: Command): void {
     )
     .option("--dry-run", "Print the resulting config without writing it")
     .action((opts: { client?: string; pat?: boolean; dryRun?: boolean }) => {
-      runInstall(opts);
+      runMcpInstall(opts);
     });
 
   mcp
