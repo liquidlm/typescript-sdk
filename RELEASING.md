@@ -60,3 +60,19 @@ an old credential format without a recovery instruction.
 The initial release is experimental. Publish a tested runtime/platform matrix,
 known gaps and a realistic support policy. A CI matrix entry is an intended check,
 not evidence of a pass until the workflow actually runs.
+
+## Release and support policy
+
+- Semver: breaking SDK/CLI contract changes bump minor (0.x alpha line) or
+  major (post-1.0); additive operations and fixes are patch-level. The public
+  API contract snapshot and generated types change only with a reviewed diff.
+- Compatibility window: the CLI supports the Node versions in the published
+  SUPPORT.md matrix; the SDK targets the same. End-of-life Node versions drop
+  out at the next minor release with a changelog note.
+- Security response target: acknowledged within 3 business days via private
+  vulnerability reporting; fixes land on the newest prerelease line.
+- Deprecation: a deprecated operation or flag prints a warning for at least
+  one minor line before removal; removal requires a migration note and a
+  changelog entry.
+- Rollback: published versions are immutable; a regression ships as a new
+  version and the broken one is deprecated on npm/PyPI, never silently reused.
